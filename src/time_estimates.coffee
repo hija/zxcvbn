@@ -41,29 +41,30 @@ time_estimates =
     month = day * 31
     year = month * 12
     century = year * 100
-    [display_num, display_str] = if seconds < 1
-      [null, 'less than a second']
+    plural = ""
+    [display_num, display_str, plural] = if seconds < 1
+      [null, 'weniger als eine Sekunde', null]
     else if seconds < minute
       base = Math.round seconds
-      [base, "#{base} second"]
+      [base, "#{base} Sekunde", "n"]
     else if seconds < hour
       base = Math.round seconds / minute
-      [base, "#{base} minute"]
+      [base, "#{base} Minute", "n"]
     else if seconds < day
       base = Math.round seconds / hour
-      [base, "#{base} hour"]
+      [base, "#{base} Stunde", "n"]
     else if seconds < month
       base = Math.round seconds / day
-      [base, "#{base} day"]
+      [base, "#{base} Tag", "e"]
     else if seconds < year
       base = Math.round seconds / month
-      [base, "#{base} month"]
+      [base, "#{base} Monat", "e"]
     else if seconds < century
       base = Math.round seconds / year
-      [base, "#{base} year"]
+      [base, "#{base} Jahr", "e"]
     else
-      [null, 'centuries']
-    display_str += 's' if display_num? and display_num != 1
+      [null, 'Jahrhunderte']
+    display_str += plural if display_num? and display_num != 1
     display_str
 
 module.exports = time_estimates
